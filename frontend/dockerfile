@@ -1,14 +1,18 @@
-FROM node:18-alpine AS build
+# Base image
+FROM node:18-alpine
+
+# Set working directory
 WORKDIR /app
 
-COPY . .
-
+# Copy package files and install dependencies
+COPY package*.json ./
 RUN npm install
 
-# Vite loads .env.production during this step
-RUN npm run build
+# Copy the rest of the app
+COPY . .
 
-FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
-EXPOSE 3000
-CMD ["nginx", "-g", "daemon off;"]
+# Expose backend port
+EXPOSE 80
+
+# Start the server
+CMD ["npm", "run", "dev"]
