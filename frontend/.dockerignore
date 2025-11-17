@@ -1,0 +1,8 @@
+node_modules
+dist
+vite.config.js.timestamp
+npm-debug.log
+.next
+.env
+.git
+.DS_Store

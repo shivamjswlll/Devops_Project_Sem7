@@ -1,0 +1,28 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "5001:5001"
+    environment:
+      PORT: 5001
+      MONGO_URL: ${MONGO_URL}
+      STREAM_API_KEY: ${STREAM_API_KEY}
+      STREAM_API_SECRET: ${STREAM_API_SECRET}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      NODE_ENV: ${NODE_ENV}
+    networks:
+      - mern-net
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - mern-net
+
+networks:
+  mern-net:
